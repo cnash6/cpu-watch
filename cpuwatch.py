@@ -11,7 +11,7 @@ def get_stock():
     items = json.loads(open('items.json', 'r').read())
     changed = []
     for i, item in enumerate(items['items']):
-        stock = BeautifulSoup(requests.get(item['url']).text, 'html.parser').find_all("span", class_="inventoryCnt")[0].string
+        stock = BeautifulSoup(requests.get(item['url']).text, 'html.parser').find_all("span", class_=item['tag'])[0].string
         if stock != item['stock']:
             upT = time.strftime("%m/%d %H:%M:%S", time.localtime())
             changed.append(f'{item["item"]} updated from:\n\t{items["items"][i]["stock"]} => {stock}\n\t@ {upT}')
@@ -31,7 +31,7 @@ def get_stock():
         )
 
 
-schedule.every(5).minutes.at(":00").do(get_stock)
+schedule.every(10).minutes.at(":00").do(get_stock)
 
 while True:
     schedule.run_pending()
