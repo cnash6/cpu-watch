@@ -1,1 +1,6 @@
 items.json
+.env
+lambda/*
+!lambda/install-deps.sh
+!lambda/cpuwatch_lambda.py
+!lambda/requirements.txt
